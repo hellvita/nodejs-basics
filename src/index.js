@@ -9,4 +9,4 @@ const pathToFile = path.join(pathToWorkDir, 'src', 'index.js');
 console.log('pathToFile: ', pathToFile);
 
 const pathParts = path.parse(pathToFile);
-console.log("pathParts: ", pathParts);
+console.log('pathParts: ', pathParts);
