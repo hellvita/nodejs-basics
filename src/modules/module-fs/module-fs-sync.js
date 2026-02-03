@@ -21,7 +21,7 @@ export const file2 = path.join(pathToWorkDir, 'files', 'file_2.txt');
 const file1Data = fs.readFileSync(file1, 'utf8');
 console.log('file1Data: ', file1Data);
 
-// ** синхронний fs -запис у файл
+// ** синхронний fs - запис у файл
 // якщо файл існує - перезапише його,
 // якщо ні - створить новий
 

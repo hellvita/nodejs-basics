@@ -16,12 +16,18 @@ console.log('buffer1Async: ', buffer1Async);
 const file1DataAsync = await fs.readFile(file1, 'utf8');
 console.log('file1DataAsync: ', file1DataAsync);
 
-// ** асинхронний fs -запис у файл
+// ** асинхронний fs - запис у файл (перезапис файлу)
 // якщо файл існує - перезапише його,
 // якщо ні - створить новий
 
 // з додаванням дургого аргумента,
 // що відповідає за кодування
-await fs.writeFile(file2, "how it's going, helvita?~☻", 'utf8');
+await fs.writeFile(file2, "\n>>> how it's going, helvita?~☻", 'utf8');
 const file2DataAsync = await fs.readFile(file2, 'utf8');
 console.log('file2DataAsync: ', file2DataAsync);
+
+// ** асинхронний fs - запис у файл (додавання нової інформації)
+// додавання даних в кінець файлу
+await fs.appendFile(file2, "\n>>> i hope you're doing well~♥");
+const file2DataAsyncUpdated = await fs.readFile(file2, 'utf8');
+console.log('file2DataAsyncUpdated: ', file2DataAsyncUpdated);
