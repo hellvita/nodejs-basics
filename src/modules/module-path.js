@@ -10,5 +10,5 @@ export const pathToWorkDir = path.join(process.cwd());
 const pathToFile = path.join(pathToWorkDir, 'src', 'index.js');
 console.log('pathToFile: ', pathToFile);
 
-const pathParts = path.parse(pathToFile);
-console.log('pathParts: ', pathParts);
+export const pathParts = (pathToFile) => path.parse(pathToFile);
+console.log('pathParts: ', pathParts(pathToFile));

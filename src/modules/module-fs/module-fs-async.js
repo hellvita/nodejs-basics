@@ -1,5 +1,7 @@
 console.log('\n------ fs async ------\n');
 
+import path from 'node:path';
+import { pathToWorkDir, pathParts } from '../module-path.js';
 import { file1, file2 } from './module-fs-sync.js';
 
 // ?? робота з файлами та папками за допомогою модуля node:fs
@@ -31,3 +33,26 @@ console.log('file2DataAsync: ', file2DataAsync);
 await fs.appendFile(file2, "\n>>> i hope you're doing well~♥");
 const file2DataAsyncUpdated = await fs.readFile(file2, 'utf8');
 console.log('file2DataAsyncUpdated: ', file2DataAsyncUpdated);
+
+// ** асинхронний fs - зміна шляху до файлу/перейменування файлу
+const folderPath = path.join(pathToWorkDir, 'files');
+
+const oldPath = path.join(folderPath, 'file_2.txt');
+const newPath = path.join(folderPath, 'file_3.txt');
+
+const file3 = newPath;
+
+await fs.rename(oldPath, newPath);
+
+console.log('file2:', pathParts(file2));
+console.log('file3:', pathParts(file3));
+
+try {
+  const file2DataAsyncDeleted = await fs.readFile(file2, 'utf8');
+  console.log('file2DataAsyncDeleted: ', file2DataAsyncDeleted);
+} catch (error) {
+  console.log(`\nerror: ${error}\n`);
+}
+
+const file3DataAsync = await fs.readFile(file3, 'utf8');
+console.log('file3DataAsync: ', file3DataAsync);
