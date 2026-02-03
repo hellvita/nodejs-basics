@@ -47,12 +47,40 @@ await fs.rename(oldPath, newPath);
 console.log('file2:', pathParts(file2));
 console.log('file3:', pathParts(file3));
 
+// з додаванням дургого аргумента,
+// що відповідає за кодування
 try {
   const file2DataAsyncDeleted = await fs.readFile(file2, 'utf8');
   console.log('file2DataAsyncDeleted: ', file2DataAsyncDeleted);
 } catch (error) {
-  console.log(`\nerror: ${error}\n`);
+  console.log(`\n(read file) error:\n ${error}\n`);
 }
 
 const file3DataAsync = await fs.readFile(file3, 'utf8');
 console.log('file3DataAsync: ', file3DataAsync);
+
+// ** асинхронний fs - видалення файлу
+try {
+  await fs.unlink(file2);
+} catch (error) {
+  console.log(`\n(delete file) error: ${error}\n`);
+}
+
+const junkyFile = path.join(pathToWorkDir, 'files', 'junk.txt');
+await fs.writeFile(
+  junkyFile,
+  "\ni know, that imma leave you soon,\nbut i'm still happy to see ya!♥♥♥",
+  'utf8',
+);
+
+const junkyFileDataAsync = await fs.readFile(junkyFile, 'utf8');
+console.log('junkyFileDataAsync: ', junkyFileDataAsync);
+
+await fs.unlink(junkyFile);
+
+try {
+  const junkyFileDataAsync = await fs.readFile(junkyFile, 'utf8');
+  console.log('junkyFileDataAsync: ', junkyFileDataAsync);
+} catch (error) {
+  console.log(`\n(read file) error:\n ${error}\n`);
+}
