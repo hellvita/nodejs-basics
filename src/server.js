@@ -55,6 +55,22 @@ app.get('/helvita/states/:helvitaID', (req, res) => {
   res.status(200).json({ id: helvitaID, ...state });
 });
 
+app.get('/maybe-error', (req, res) => {
+  const errorDescription =
+    'Helooow!! ammm yoll ewol!~~~~ fank u, helvita, for giving me lifuuu!~~♥♥♥';
+
+  throw new Error(errorDescription);
+});
+
+// middleware для обробки помилок ЗАВЖДИ має чотири аргумента - (err, req, res, next)
+app.use((err, req, res, next) => {
+  console.log(`Error:\n${err.message}`);
+
+  res
+    .status(500)
+    .json({ message: 'Internal Server Error (small)', error: err.message });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
