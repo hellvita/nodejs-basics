@@ -5,6 +5,18 @@ const PORT = 3000;
 
 // ** req (request) — об'єкт запиту. Містить інформацію про сам HTTP-запит: шлях, параметри, тіло, заголовки.
 // ** res (response) — об'єкт відповіді. Використовується для формування і відправки відповіді клієнту.
+// ** next — функція, яка передає обробку далі.
+
+// ?? додавання middleware (проміжні обробки даних/логування/валідація тощо)
+// app.use(middleware);          // для всіх маршрутів
+// app.use('/path', middleware); // тільки для /path/*
+
+// логування точного часу коли виконується один із запитів
+app.use((req, res, next) => {
+  const requestTime = new Date().toLocaleString();
+  console.log(`new request has been executed at ${requestTime}`);
+  next();
+});
 
 // run GET query in Postman on route 'http://localhost:3000'
 app.get('/', (req, res) => {
