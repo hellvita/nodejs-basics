@@ -11,6 +11,11 @@ const PORT = 3000;
 // app.use(middleware);          // для всіх маршрутів
 // app.use('/path', middleware); // тільки для /path/*
 
+// ?? middleware для парсингу JSON
+// якщо відправити POST-запит із JSON-тілом, сервер автоматично
+// розпарсить його і збереже у req.body як JavaScript-об'єкт
+app.use(express.json());
+
 // логування точного часу коли виконується один із запитів
 app.use((req, res, next) => {
   const requestTime = new Date().toLocaleString();
@@ -55,6 +60,7 @@ app.get('/helvita/states/:helvitaID', (req, res) => {
   res.status(200).json({ id: helvitaID, ...state });
 });
 
+// запит, що викликає помилку
 app.get('/maybe-error', (req, res) => {
   const errorDescription =
     'Helooow!! ammm yoll ewol!~~~~ fank u, helvita, for giving me lifuuu!~~♥♥♥';
@@ -65,12 +71,10 @@ app.get('/maybe-error', (req, res) => {
 // ?? middleware для обробки неіснуючих маршрутів
 // ** підключається перед middleware для обробки помилок
 app.use((req, res) => {
-  res
-    .status(404)
-    .json({
-      message:
-        'This route is still unknown... If you are looking for helvita, try on some other routes',
-    });
+  res.status(404).json({
+    message:
+      'This route is still unknown... If you are looking for helvita, try on some other routes',
+  });
 });
 
 // ?? middleware для обробки помилок
