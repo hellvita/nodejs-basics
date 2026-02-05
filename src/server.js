@@ -62,7 +62,20 @@ app.get('/maybe-error', (req, res) => {
   throw new Error(errorDescription);
 });
 
-// middleware для обробки помилок ЗАВЖДИ має чотири аргумента - (err, req, res, next)
+// ?? middleware для обробки неіснуючих маршрутів
+// ** підключається перед middleware для обробки помилок
+app.use((req, res) => {
+  res
+    .status(404)
+    .json({
+      message:
+        'This route is still unknown... If you are looking for helvita, try on some other routes',
+    });
+});
+
+// ?? middleware для обробки помилок
+// ** ЗАВЖДИ має чотири аргумента - (err, req, res, next)
+// ** підключається після усіх маршрутів
 app.use((err, req, res, next) => {
   console.log(`Error:\n${err.message}`);
 
