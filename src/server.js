@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import pino from 'pino-http';
 
 const app = express();
 const PORT = 3000;
@@ -7,6 +8,27 @@ const PORT = 3000;
 // ?? дозволяє запити з будь-яких джерел
 // у більш складних випадках можна задавати конкретні домени чи методи
 app.use(cors());
+
+// ?? сучасний логер pino-http: дуже швидкий і простий у налаштуванні
+// ** use: npm install pino-http pino-pretty
+// допомагає відслідковувати, як працює застосунок:
+// які запити надходять, які відповіді повертаються і скільки часу займає обробка
+app.use(
+  pino({
+    level: 'info',
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'HH:MM:ss',
+        ignore: 'pid,hostname',
+        messageFormat:
+          '{req.method} {req.url} {res.statusCode} - {responseTime} ms',
+        hideObject: true,
+      },
+    },
+  }),
+);
 
 // ** req (request) — об'єкт запиту. Містить інформацію про сам HTTP-запит: шлях, параметри, тіло, заголовки.
 // ** res (response) — об'єкт відповіді. Використовується для формування і відправки відповіді клієнту.
