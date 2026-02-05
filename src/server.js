@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
+import 'dotenv/config';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ?? 3000;
 
 // ?? дозволяє запити з будь-яких джерел
 // у більш складних випадках можна задавати конкретні домени чи методи
