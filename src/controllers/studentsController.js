@@ -23,3 +23,14 @@ export const createStudent = async (req, res) => {
 
   res.status(201).json(student);
 };
+
+export const deleteStudent = async (req, res) => {
+  const { studentId } = req.params;
+  const student = await Student.findOneAndDelete({ _id: studentId });
+
+  if (!student) {
+    throw createHttpError(404, 'Student not found');
+  }
+
+  res.status(200).json(student);
+};

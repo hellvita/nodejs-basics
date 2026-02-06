@@ -3,6 +3,7 @@ import {
   getStudents,
   getStudentByID,
   createStudent,
+  deleteStudent,
 } from '../controllers/studentsController.js';
 
 const router = Router();
@@ -17,5 +18,8 @@ router.get('/students/:studentId', getStudentByID);
 
 // Маршрут: створення нового студента
 router.post('/students', createStudent);
+
+// Маршрут: видалити одного студента за id
+router.delete('/students/:studentId', deleteStudent);
 
 export default router;
