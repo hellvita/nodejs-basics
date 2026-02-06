@@ -4,6 +4,7 @@ import {
   getStudentByID,
   createStudent,
   deleteStudent,
+  updateStudent,
 } from '../controllers/studentsController.js';
 
 const router = Router();
@@ -21,5 +22,8 @@ router.post('/students', createStudent);
 
 // Маршрут: видалити одного студента за id
 router.delete('/students/:studentId', deleteStudent);
+
+// Маршрут: оновити дані про одного студента за id
+router.patch('/students/:studentId', updateStudent);
 
 export default router;
