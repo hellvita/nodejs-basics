@@ -1,4 +1,5 @@
 import { Student } from '../models/student.js';
+import createHttpError from 'http-errors';
 
 export const getStudents = async (req, res) => {
   const students = await Student.find();
@@ -10,7 +11,7 @@ export const getStudentByID = async (req, res) => {
   const student = await Student.findById(studentId);
 
   if (!student) {
-    return res.status(404).json({ message: 'Student not found' });
+    throw createHttpError(404, 'Student not found');
   }
 
   res.status(200).json(student);

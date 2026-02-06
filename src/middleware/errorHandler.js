@@ -1,3 +1,5 @@
+import { HttpError } from 'http-errors';
+
 // ?? middleware для обробки помилок
 // ** ЗАВЖДИ має чотири аргумента - (err, req, res, next)
 // ** підключається після усіх маршрутів
@@ -8,6 +10,10 @@ export const errorHandler = (err, req, res, next) => {
     return res
       ?.status(400)
       .json({ message: `Invalid format for ${err?.path}: ${err?.value}` });
+  }
+
+  if (err instanceof HttpError) {
+    return res?.status(err.status).json({ message: err.message || err.name });
   }
 
   const isProd = process.env.NODE_ENV === 'production';
