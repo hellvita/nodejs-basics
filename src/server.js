@@ -21,7 +21,11 @@ app.use(logger);
 // ?? middleware для парсингу JSON
 // якщо відправити POST-запит із JSON-тілом, сервер автоматично
 // розпарсить його і збереже у req.body як JavaScript-об'єкт
-app.use(express.json());
+app.use(
+  express.json({
+    type: ['application/json', 'application/vnd.api+json'],
+  }),
+);
 
 // ?? дозволяє запити з будь-яких джерел
 // у більш складних випадках можна задавати конкретні домени чи методи
