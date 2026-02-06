@@ -3,9 +3,9 @@ import cors from 'cors';
 import 'dotenv/config';
 import { logger } from './middleware/logger.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
-import { Student } from './models/student.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
+import studentsRoutes from './routes/studentsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -87,24 +87,7 @@ app.get('/maybe-error', (req, res) => {
 });
 
 // !! Робота з БД 'students'
-
-// Маршрут: отримати всіх студентів
-app.get('/students', async (req, res) => {
-  const students = await Student.find();
-  res.status(200).json(students);
-});
-
-// Маршрут: отримати одного студента за id
-app.get('/students/:studentId', async (req, res) => {
-  const { studentId } = req.params;
-  const student = await Student.findById(studentId);
-
-  if (!student) {
-    return res.status(404).json({ message: 'Student not found' });
-  }
-
-  res.status(200).json(student);
-});
+app.use(studentsRoutes);
 
 // ?? middleware для обробки неіснуючих маршрутів
 // ** підключається перед middleware для обробки помилок
