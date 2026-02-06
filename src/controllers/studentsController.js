@@ -3,6 +3,7 @@ import createHttpError from 'http-errors';
 
 export const getStudents = async (req, res) => {
   const students = await Student.find();
+
   res.status(200).json(students);
 };
 
@@ -15,4 +16,10 @@ export const getStudentByID = async (req, res) => {
   }
 
   res.status(200).json(student);
+};
+
+export const createStudent = async (req, res) => {
+  const student = await Student.create(req.body);
+
+  res.status(201).json(student);
 };
