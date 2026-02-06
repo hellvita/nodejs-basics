@@ -3,6 +3,7 @@ import cors from 'cors';
 import pino from 'pino-http';
 import 'dotenv/config';
 import { connectMongoDB } from './db/connectMongoDB.js';
+import { Student } from './models/student.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -97,6 +98,26 @@ app.get('/maybe-error', (req, res) => {
   throw new Error(errorDescription);
 });
 
+// !! Робота з БД 'students'
+
+// Маршрут: отримати всіх студентів
+app.get('/students', async (req, res) => {
+  const students = await Student.find();
+  res.status(200).json(students);
+});
+
+// Маршрут: отримати одного студента за id
+app.get('/students/:studentId', async (req, res) => {
+  const { studentId } = req.params;
+  const student = await Student.findById(studentId);
+
+  if (!student) {
+    return res.status(404).json({ message: 'Student not found' });
+  }
+
+  res.status(200).json(student);
+});
+
 // ?? middleware для обробки неіснуючих маршрутів
 // ** підключається перед middleware для обробки помилок
 app.use((req, res) => {
@@ -111,6 +132,12 @@ app.use((req, res) => {
 // ** підключається після усіх маршрутів
 app.use((err, req, res, next) => {
   console.log(`Error:\n${err.message}`);
+
+  if (err.name === 'CastError') {
+    return res
+      .status(400)
+      .json({ message: `Invalid format for ${err.path}: ${err.value}` });
+  }
 
   const isProd = process.env.NODE_ENV === 'production';
   const prodMessage =
