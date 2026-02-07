@@ -2,10 +2,17 @@ import { Student } from '../models/student.js';
 import createHttpError from 'http-errors';
 
 export const getStudents = async (req, res) => {
-  const { page = 1, perPage = 10 } = await req.query;
+  const { page = 1, perPage = 10, gender, minAvgMark } = await req.query;
   const skip = (page - 1) * perPage;
 
   const studentsQuery = Student.find();
+
+  if (gender) {
+    studentsQuery.where('gender').equals(gender);
+  }
+  if (minAvgMark) {
+    studentsQuery.where('avgMark').equals(minAvgMark);
+  }
 
   const [totalItems, students] = await Promise.all([
     studentsQuery.clone().countDocuments(),
