@@ -11,7 +11,7 @@ export const getStudents = async (req, res) => {
     studentsQuery.where('gender').equals(gender);
   }
   if (minAvgMark) {
-    studentsQuery.where('avgMark').equals(minAvgMark);
+    studentsQuery.where('avgMark').gte(minAvgMark);
   }
 
   const [totalItems, students] = await Promise.all([
