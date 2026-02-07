@@ -1,6 +1,24 @@
 import { Student } from '../models/student.js';
 import createHttpError from 'http-errors';
 
+// ** Основні оператори в mongoose:
+// ♥ Рівність ($eq)
+// ♥ Нерівність ($ne)
+// ♥ Більше ($gt)
+// ♥ Більше або дорівнює ($gte)
+// ♥ Менше ($lt)
+// ♥ Менше або дорівнює ($lte)
+// ♥ У межах списку ($in)
+// ♥ Не у списку ($nin)
+
+// ** Приклад:
+/**
+ * ?? await Student.find()
+ * ??   .where('age').gte(6).lte(10)   // вік від 6 до 10 включно
+ * ??   .where('avgMark').gt(7)        // середній бал більше 7
+ * ??   .exec();                       // виконати зібраний запит
+ **/
+
 export const getStudents = async (req, res) => {
   const { page = 1, perPage = 10, gender, minAvgMark } = await req.query;
   const skip = (page - 1) * perPage;
