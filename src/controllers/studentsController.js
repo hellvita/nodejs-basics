@@ -2,9 +2,19 @@ import { Student } from '../models/student.js';
 import createHttpError from 'http-errors';
 
 export const getStudents = async (req, res) => {
-  const students = await Student.find();
+  const { page = 1, perPage = 10 } = await req.query;
+  const skip = (page - 1) * perPage;
 
-  res.status(200).json(students);
+  const studentsQuery = Student.find();
+
+  const [totalItems, students] = await Promise.all([
+    studentsQuery.clone().countDocuments(),
+    studentsQuery.skip(skip).limit(perPage),
+  ]);
+
+  const totalPages = Math.ceil(totalItems / perPage);
+
+  res.status(200).json({ page, perPage, totalItems, totalPages, students });
 };
 
 export const getStudentByID = async (req, res) => {

@@ -18,6 +18,7 @@ import {
   createStudentSchema,
   studentIdParamSchema,
   updateStudentSchema,
+  getStudentsSchema,
 } from '../validations/studentsValidation.js';
 
 const router = Router();
@@ -25,7 +26,11 @@ const router = Router();
 // !! Робота з БД 'students'
 
 // Маршрут: отримати всіх студентів
-router.get('/students', getStudents);
+router.get(
+  '/students',
+  celebrate(getStudentsSchema),
+  getStudents,
+);
 
 // Маршрут: отримати одного студента за id
 // ** У Express маршрут може мати кілька проміжних функцій (middleware),
