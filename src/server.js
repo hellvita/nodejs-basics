@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import { logger } from './middleware/logger.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
+import { errors } from 'celebrate';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import helvitaRoutes from './routes/helvitaRoutes.js';
@@ -55,6 +56,9 @@ app.use(studentsRoutes);
 // ?? middleware для обробки неіснуючих маршрутів
 // ** підключається перед middleware для обробки помилок
 app.use(notFoundHandler);
+
+// ?? middleware для обробки помилок під час валідації
+app.use(errors());
 
 // ?? middleware для обробки помилок
 // ** ЗАВЖДИ має чотири аргумента - (err, req, res, next)
