@@ -17,6 +17,7 @@ import { celebrate } from 'celebrate';
 import {
   createStudentSchema,
   studentIdParamSchema,
+  updateStudentSchema,
 } from '../validations/studentsValidation.js';
 
 const router = Router();
@@ -27,6 +28,8 @@ const router = Router();
 router.get('/students', getStudents);
 
 // Маршрут: отримати одного студента за id
+// ** У Express маршрут може мати кілька проміжних функцій (middleware),
+// ** що виконуються у вказаному порядку
 router.get(
   '/students/:studentId',
   celebrate(studentIdParamSchema),
@@ -34,8 +37,6 @@ router.get(
 );
 
 // Маршрут: створення нового студента
-// ** У Express маршрут може мати кілька проміжних функцій (middleware),
-// ** що виконуються у вказаному порядку
 router.post('/students', celebrate(createStudentSchema), createStudent);
 
 // Маршрут: видалити одного студента за id
@@ -48,7 +49,7 @@ router.delete(
 // Маршрут: оновити дані про одного студента за id
 router.patch(
   '/students/:studentId',
-  celebrate(studentIdParamSchema),
+  celebrate(updateStudentSchema),
   updateStudent,
 );
 
