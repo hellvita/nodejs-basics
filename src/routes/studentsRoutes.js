@@ -14,7 +14,10 @@ import {
 // ** Якщо дані валідні — запит переходить далі у контролер
 // ** Якщо ні — автоматично повертається помилка 400 Bad Request з поясненням, що саме не відповідає правилам
 import { celebrate } from 'celebrate';
-import { createStudentSchema } from '../validations/studentsValidation.js';
+import {
+  createStudentSchema,
+  studentIdParamSchema,
+} from '../validations/studentsValidation.js';
 
 const router = Router();
 
@@ -24,7 +27,11 @@ const router = Router();
 router.get('/students', getStudents);
 
 // Маршрут: отримати одного студента за id
-router.get('/students/:studentId', getStudentByID);
+router.get(
+  '/students/:studentId',
+  celebrate(studentIdParamSchema),
+  getStudentByID,
+);
 
 // Маршрут: створення нового студента
 // ** У Express маршрут може мати кілька проміжних функцій (middleware),
@@ -32,9 +39,17 @@ router.get('/students/:studentId', getStudentByID);
 router.post('/students', celebrate(createStudentSchema), createStudent);
 
 // Маршрут: видалити одного студента за id
-router.delete('/students/:studentId', deleteStudent);
+router.delete(
+  '/students/:studentId',
+  celebrate(studentIdParamSchema),
+  deleteStudent,
+);
 
 // Маршрут: оновити дані про одного студента за id
-router.patch('/students/:studentId', updateStudent);
+router.patch(
+  '/students/:studentId',
+  celebrate(studentIdParamSchema),
+  updateStudent,
+);
 
 export default router;
