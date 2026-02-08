@@ -20,11 +20,20 @@ import createHttpError from 'http-errors';
  **/
 
 export const getStudents = async (req, res) => {
-  const { page = 1, perPage = 10, gender, minAvgMark } = await req.query;
+  const {
+    page = 1,
+    perPage = 10,
+    gender,
+    minAvgMark,
+    search,
+  } = await req.query;
   const skip = (page - 1) * perPage;
 
   const studentsQuery = Student.find();
 
+  if (search) {
+    studentsQuery.where({ $text: { $search: search } });
+  }
   if (gender) {
     studentsQuery.where('gender').equals(gender);
   }

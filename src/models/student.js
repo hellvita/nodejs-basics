@@ -14,4 +14,9 @@ const studentSchema = new Schema(
   },
 );
 
+studentSchema.index(
+  { name: 'text' },
+  { name: 'StudentTextIndex', default_language: 'english' },
+);
+
 export const Student = model('Student', studentSchema);
