@@ -18,6 +18,8 @@ export const getStudentsSchema = {
     gender: Joi.string().valid('male', 'female', 'other'),
     minAvgMark: Joi.number().positive(),
     search: Joi.string().trim().allow(''),
+    sortBy: Joi.string().valid('_id', 'name', 'age', 'avgMark'),
+    sortOrder: Joi.string().valid('asc', 'desc'),
   }),
 };
 
