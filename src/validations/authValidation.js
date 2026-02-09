@@ -1,5 +1,4 @@
 import { Joi, Segments } from 'celebrate';
-import { Schema } from 'mongoose';
 
 export const registerUserSchema = {
   [Segments.BODY]: Joi.object({
@@ -8,9 +7,9 @@ export const registerUserSchema = {
   }),
 };
 
-export const loginUserSchema = new Schema({
+export const loginUserSchema = {
   [Segments.BODY]: Joi.object({
     email: Joi.string().email().required().lowercase(),
     password: Joi.string().required(),
   }),
-});
+};
