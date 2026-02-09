@@ -19,11 +19,10 @@ const userSchema = new Schema(
 );
 
 // ** pre-hook Schema.pre("save") виконується перед збереженням користувача
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function () {
   if (!this.username) {
     this.username = this.email.split('@')[0];
   }
-  next();
 });
 
 // ** видалення паролю з відповіді, перевизначивши метод toJSON()
