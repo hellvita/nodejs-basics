@@ -19,4 +19,9 @@ studentSchema.index(
   { name: 'StudentTextIndex', default_language: 'english' },
 );
 
+// ** на основі даних із першого аргументу в MongoDB автоматично створюється колекція
+// ** (або використовується вже наявна при співпадінні імен)
+// !! за принципом: Student -> Students -> students
+// ?? для використання специфічної назви колекції потрібно додати її третім аргументом:
+// export const User = model('Student', studentSchema, 'pupils');
 export const Student = model('Student', studentSchema);

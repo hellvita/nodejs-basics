@@ -32,4 +32,9 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
+// ** на основі даних із першого аргументу в MongoDB автоматично створюється колекція
+// ** (або використовується вже наявна при співпадінні імен)
+// !! за принципом: User -> Users -> users
+// ?? для використання специфічної назви колекції потрібно додати її третім аргументом:
+// export const User = model('User', userSchema, 'members');
 export const User = model('User', userSchema);
