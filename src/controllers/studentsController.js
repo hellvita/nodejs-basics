@@ -58,7 +58,10 @@ export const getStudents = async (req, res) => {
 
 export const getStudentByID = async (req, res) => {
   const { studentId } = req.params;
-  const student = await Student.findById(studentId);
+  const student = await Student.findOne({
+    _id: studentId,
+    userId: req.user._id,
+  });
 
   if (!student) {
     throw createHttpError(404, 'Student not found');
