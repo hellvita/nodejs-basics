@@ -21,16 +21,17 @@ import {
   getStudentsSchema,
 } from '../validations/studentsValidation.js';
 
+import { authenticate } from '../middleware/authenticate.js';
+
 const router = Router();
 
 // !! Робота з БД 'students'
 
+// ** Додаємо middleware до всіх шляхів, що починаються з /students
+router.use("/students", authenticate);
+
 // Маршрут: отримати всіх студентів
-router.get(
-  '/students',
-  celebrate(getStudentsSchema),
-  getStudents,
-);
+router.get('/students', celebrate(getStudentsSchema), getStudents);
 
 // Маршрут: отримати одного студента за id
 // ** У Express маршрут може мати кілька проміжних функцій (middleware),
