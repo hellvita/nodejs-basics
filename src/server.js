@@ -7,6 +7,7 @@ import { errors } from 'celebrate';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import helvitaRoutes from './routes/helvitaRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import studentsRoutes from './routes/studentsRoutes.js';
 
 const app = express();
@@ -51,6 +52,7 @@ app.use((req, res, next) => {
 app.use(helvitaRoutes);
 
 // !! Робота з БД 'students'
+app.use(authRoutes);
 app.use(studentsRoutes);
 
 // ?? middleware для обробки неіснуючих маршрутів
