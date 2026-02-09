@@ -14,4 +14,9 @@ const sessionSchema = new Schema(
   },
 );
 
+// ** на основі даних із першого аргументу в MongoDB автоматично створюється колекція
+// ** (або використовується вже наявна при співпадінні імен)
+// !! за принципом: Session -> Sessions -> sessions
+// ?? для використання специфічної назви колекції потрібно додати її третім аргументом:
+// export const Session = model('Session', sessionSchema, 'auths');
 export const Session = model('Session', sessionSchema);
