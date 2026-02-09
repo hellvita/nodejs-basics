@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import cookieParser from 'cookie-parser';
 import { logger } from './middleware/logger.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errors } from 'celebrate';
@@ -33,6 +34,9 @@ app.use(
 // у більш складних випадках можна задавати конкретні домени чи методи
 app.use(cors());
 
+// ?? парсер для cookie
+app.use(cookieParser());
+
 // ** req (request) — об'єкт запиту. Містить інформацію про сам HTTP-запит: шлях, параметри, тіло, заголовки.
 // ** res (response) — об'єкт відповіді. Використовується для формування і відправки відповіді клієнту.
 // ** next — функція, яка передає обробку далі.
@@ -52,8 +56,8 @@ app.use((req, res, next) => {
 app.use(helvitaRoutes);
 
 // !! Робота з БД 'students'
-app.use(authRoutes);
-app.use(studentsRoutes);
+app.use(authRoutes); // колекція users
+app.use(studentsRoutes); // колекція students
 
 // ?? middleware для обробки неіснуючих маршрутів
 // ** підключається перед middleware для обробки помилок
