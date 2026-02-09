@@ -78,7 +78,10 @@ export const createStudent = async (req, res) => {
 
 export const deleteStudent = async (req, res) => {
   const { studentId } = req.params;
-  const student = await Student.findOneAndDelete({ _id: studentId });
+  const student = await Student.findOneAndDelete({
+    _id: studentId,
+    userId: req.user._id,
+  });
 
   if (!student) {
     throw createHttpError(404, 'Student not found');
