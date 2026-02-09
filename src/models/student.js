@@ -7,6 +7,7 @@ const studentSchema = new Schema(
     gender: { type: String, required: true, enum: ['male', 'female', 'other'] },
     avgMark: { type: Number, required: true },
     onDuty: { type: Boolean, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   {
     timestamps: true,
