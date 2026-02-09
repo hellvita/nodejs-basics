@@ -31,7 +31,7 @@ export const getStudents = async (req, res) => {
   } = await req.query;
   const skip = (page - 1) * perPage;
 
-  const studentsQuery = Student.find();
+  const studentsQuery = Student.find({ userId: req.user._id });
 
   if (search) {
     studentsQuery.where({ $text: { $search: search } });
