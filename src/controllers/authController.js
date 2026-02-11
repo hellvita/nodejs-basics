@@ -91,9 +91,11 @@ export const requestResetEmail = async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (!user) {
-    throw createHttpError(401);
-  }
+  // ** Завдяки валідаційній схемі, якщо email некоректний
+  // ** — клієнт одразу отримає 400 Bad Request
+  // if (!user) {
+  //   throw createHttpError(401);
+  // }
 
   res.status(200).json({ message: 'Password reset email sent successfully' });
 };
