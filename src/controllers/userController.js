@@ -1,3 +1,13 @@
+import createHttpError from 'http-errors';
+import { User } from '../models/user.js';
+
 export const updateUserAvatar = async (req, res) => {
+  const { file } = req;
+  if (!file) {
+    throw createHttpError(400, 'No file has been loaded');
+  }
+
+  console.log(file);
+
   res.status(200).json({ url: '' });
 };
