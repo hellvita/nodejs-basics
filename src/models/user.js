@@ -1,4 +1,11 @@
 import { model, Schema } from 'mongoose';
+import path from 'node:path';
+
+const avatarPath = path.join(
+  'src',
+  'public',
+  'helvita-students-default-avatar.jpg',
+);
 
 const userSchema = new Schema(
   {
@@ -11,6 +18,7 @@ const userSchema = new Schema(
       trim: true,
     },
     password: { type: String, required: true },
+    avatar: { type: String, required: false, default: avatarPath },
   },
   {
     timestamps: true,
