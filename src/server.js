@@ -10,6 +10,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import helvitaRoutes from './routes/helvitaRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import studentsRoutes from './routes/studentsRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -58,6 +59,7 @@ app.use(helvitaRoutes);
 // !! Робота з БД 'students'
 app.use(authRoutes); // колекція users
 app.use(studentsRoutes); // колекція students
+app.use(userRoutes); // колекція users
 
 // ?? middleware для обробки неіснуючих маршрутів
 // ** підключається перед middleware для обробки помилок
