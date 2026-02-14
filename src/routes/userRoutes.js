@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import { authenticate } from '../middleware/authenticate.js';
-import { updateUserAvatar, updateUser } from '../controllers/userController.js';
+import {
+  updateUserAvatar,
+  updateUser,
+  getUser,
+} from '../controllers/userController.js';
 import { upload } from '../middleware/multer.js';
 
 const router = Router();
@@ -13,5 +17,7 @@ router.patch(
 );
 
 router.patch('/users/me', authenticate, updateUser);
+
+router.get('/users/me', authenticate, getUser);
 
 export default router;
