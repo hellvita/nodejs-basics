@@ -92,6 +92,7 @@ export const deleteStudent = async (req, res) => {
 
 export const updateStudent = async (req, res) => {
   const { studentId } = req.params;
+
   const student = await Student.findOneAndUpdate(
     { _id: studentId, userId: req.user._id },
     req.body,
